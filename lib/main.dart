@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +7,7 @@ import 'core/api.dart';
 import 'core/routing/router.dart';
 
 Future<void> main() async {
+  usePathUrlStrategy(); // /liability instead of /#/liability (the host must serve index.html for unknown paths)
   WidgetsFlutterBinding.ensureInitialized();
   final api = ApiClient();
   await api.load();
@@ -37,3 +39,4 @@ class _PortalAppState extends State<PortalApp> {
     );
   }
 }
+
