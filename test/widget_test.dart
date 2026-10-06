@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:il_portal/api.dart';
-import 'package:il_portal/config.dart';
-import 'package:il_portal/demo_users.dart';
+import 'package:il_portal/core/api.dart';
+import 'package:il_portal/core/config.dart';
+import 'package:il_portal/features/auth/demo_users.dart';
 import 'package:il_portal/main.dart';
-import 'package:il_portal/menu.dart';
+import 'package:il_portal/shell/menu.dart';
 import 'package:provider/provider.dart';
 
 Future<void> pumpApp(WidgetTester tester) => tester.pumpWidget(
@@ -100,3 +100,4 @@ void main() {
     test('role titles', () => expect(roleTitle('UNDERWRITER'), 'Underwriter Dashboard'));
   });
 }
+

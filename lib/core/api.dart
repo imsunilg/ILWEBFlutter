@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -58,12 +58,12 @@ class ApiClient extends ChangeNotifier {
   Future<dynamic> get(String path) => _send('GET', path);
   Future<dynamic> post(String path, [Object? body]) => _send('POST', path, body);
 
-  /// Creates a one-time token and returns the Angular portal URL that exchanges it.
-  Future<Uri> angularHandoffUrl() async {
-    final r = await post('/api/v1/auth/handoff');
-    return Uri.parse('$angularUrl/handoff').replace(queryParameters: {'token': r['token'] as String});
+  /// Asks the API for a short-lived, single-use token that the embedded Angular module exchanges for its own session.
+  /// It is delivered with postMessage, never in a URL, and carries neither the access nor the refresh token.
+  Future<String> createFrontendSession() async {
+    final r = await post('/api/v1/frontend-session');
+    return r['token'] as String;
   }
-
   Future<void> _auth(String path, Map<String, String> body) async {
     final res = await http.post(Uri.parse('$apiUrl/api/v1/auth/$path'),
         headers: {'Content-Type': 'application/json'}, body: jsonEncode(body));
@@ -121,3 +121,4 @@ class ApiClient extends ChangeNotifier {
     notifyListeners();
   }
 }
+

@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../api.dart';
+import '../core/api.dart';
 
 enum FieldType { text, number, integer, date, select }
 
@@ -53,15 +53,15 @@ final Map<String, (String, List<QuoteField>)> quoteDefs = {
   ]),
 };
 
-class QuoteScreen extends StatefulWidget {
-  const QuoteScreen({super.key, required this.productCode});
+class QuoteFormView extends StatefulWidget {
+  const QuoteFormView({super.key, required this.productCode});
   final String productCode;
 
   @override
-  State<QuoteScreen> createState() => _QuoteScreenState();
+  State<QuoteFormView> createState() => _QuoteFormViewState();
 }
 
-class _QuoteScreenState extends State<QuoteScreen> {
+class _QuoteFormViewState extends State<QuoteFormView> {
   final _form = GlobalKey<FormState>();
   final Map<String, TextEditingController> _ctl = {};
   final Map<String, String> _select = {};
@@ -132,15 +132,14 @@ class _QuoteScreenState extends State<QuoteScreen> {
   @override
   Widget build(BuildContext context) {
     final def = _def;
-    if (def == null) return Scaffold(appBar: AppBar(), body: const Center(child: Text('Unknown product')));
-    return Scaffold(
-      appBar: AppBar(title: Text(def.$1)),
-      body: Center(
+    if (def == null) return const Center(child: Text('Unknown product'));
+    return Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 520),
           child: Form(
             key: _form,
             child: ListView(padding: const EdgeInsets.all(16), children: [
+              Text(def.$1, style: Theme.of(context).textTheme.headlineSmall),
               for (final f in def.$2)
                 if (f.type == FieldType.select)
                   DropdownButtonFormField<String>(
@@ -181,8 +180,8 @@ class _QuoteScreenState extends State<QuoteScreen> {
             ]),
           ),
         ),
-      ),
     );
   }
 }
+
 

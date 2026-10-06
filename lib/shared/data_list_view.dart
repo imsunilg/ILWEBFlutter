@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../api.dart';
+import '../core/api.dart';
 
 /// Generic read-only table for any list endpoint (customers, users, roles, reports, ...).
 class DataListView extends StatelessWidget {
@@ -44,3 +44,4 @@ class DataListView extends StatelessWidget {
     );
   }
 }
+

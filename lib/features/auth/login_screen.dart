@@ -1,9 +1,9 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../api.dart';
-import '../config.dart';
-import '../demo_users.dart';
+import '../../core/api.dart';
+import '../../core/config.dart';
+import 'demo_users.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -153,4 +153,5 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
       ];
 }
+
 

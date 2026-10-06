@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import 'api.dart';
-import 'screens/dashboard_screen.dart';
-import 'screens/login_screen.dart';
+import 'core/api.dart';
+import 'core/routing/router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,16 +12,28 @@ Future<void> main() async {
   runApp(ChangeNotifierProvider.value(value: api, child: const PortalApp()));
 }
 
-class PortalApp extends StatelessWidget {
+class PortalApp extends StatefulWidget {
   const PortalApp({super.key});
 
   @override
+  State<PortalApp> createState() => _PortalAppState();
+}
+
+class _PortalAppState extends State<PortalApp> {
+  late final GoRouter _router = buildRouter(context.read<ApiClient>());
+
+  @override
+  void dispose() {
+    _router.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final loggedIn = context.watch<ApiClient>().isLoggedIn;
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'IL Insurance Portal',
       theme: ThemeData(colorSchemeSeed: const Color(0xFF0B3D91), useMaterial3: true),
-      home: loggedIn ? const DashboardScreen() : const LoginScreen(),
+      routerConfig: _router,
     );
   }
 }
