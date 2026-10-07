@@ -1,17 +1,24 @@
-# il_portal
+# ILWEBFlutter
 
-A new Flutter project.
+Flutter web **portal shell** of the IL Insurance Portal. It owns login, header, menu, dashboard, profile, logout, Motor and Home. Travel and Liability are Angular modules (repository **ILWEBAngular**) shown in an iframe in the content area. Backend: **ILAPI**.
 
-## Getting Started
+```
+lib/
+  core/      api client, config, routing (go_router, clean path URLs)
+  shell/     portal shell (header + menu), menu definition
+  features/  auth, dashboard, motor, home, travel, liability
+  shared/    quote form, data list, Angular module host (iframe + postMessage handoff)
+```
 
-This project is a starting point for a Flutter application.
+## Run
+Needs ILAPI on http://localhost:5080 and ILWEBAngular on http://localhost:4200.
+```
+flutter pub get
+flutter run -d chrome --web-port 8080
+```
+Open http://localhost:8080. Demo login buttons (development only): Admin, Agent, Underwriter, Manager, Customer.
 
-A few resources to get you started if this is your first Flutter project:
+Environments (`--dart-define`): `APP_ENV=development|qa|production`, `ENABLE_DEMO_LOGIN=true` (QA opt-in; always off in production), `API_URL`, `ANGULAR_URL`.
+Production hosting must return `index.html` for unknown paths (SPA fallback) because URLs have no `#`.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Tests: `flutter analyze && flutter test`. Browser end-to-end (portal running as a release build on 8080): `node scripts/e2e-portal.mjs <Admin|Agent|Underwriter|Manager|Customer> <screenshot-dir>` (needs `puppeteer-core`).
